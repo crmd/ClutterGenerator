@@ -23,6 +23,10 @@ public class VoxelisedSpace {
 		float stride = voxelSize;
 		Vector3 startPos = (trans.position - new Vector3(x/2.0f*voxelSize, y/2.0f*voxelSize, z/2.0f*voxelSize)) + (Vector3.one * stride/2.0f);
 
+		////////////////////
+		ignoreAreas[0].UpdateVerts(trans.position, trans.rotation.eulerAngles);
+		////////////////////
+
 		for(int i = 0; i < z; ++i)
 		{
 			for(int j = 0; j  < y; ++j)
@@ -45,6 +49,7 @@ public class VoxelisedSpace {
 				                                 progress); 
 			}
 		}
+		ignoreAreas[0].GetVerts();
 		EditorUtility.ClearProgressBar();
 	}
 
@@ -71,7 +76,6 @@ public class VoxelisedSpace {
 	//Bounding box collision check
 	bool CheckBounds(Vector3 voxelPos, float voxelSize, Vector3 iaPos, Vector3 iaSize)
 	{
-		Debug.Log ("This isn't set up yet");
 		return false;
 //		Vector3 voxelMinBounds = new Vector3(voxelPos.x - voxelSize/2, voxelPos.y - voxelSize/2, voxelPos.z - voxelSize/2);
 //		Vector3 voxelMaxBounds = new Vector3(voxelPos.x + voxelSize/2, voxelPos.y + voxelSize/2, voxelPos.z + voxelSize/2);

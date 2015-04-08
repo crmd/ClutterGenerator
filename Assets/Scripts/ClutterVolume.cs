@@ -21,8 +21,8 @@ public class ClutterVolume : MonoBehaviour
 
 	public VoxelisedSpace vSpace = new VoxelisedSpace();
 
-	public bool drawVoxelSolid = false;
-	public bool drawVoxelWire = false;
+	public bool drawVoxelSolid = true;
+	public bool drawVoxelWire = true;
 
 	public List<IgnoreArea> ignoreAreas;
 
@@ -37,6 +37,15 @@ public class ClutterVolume : MonoBehaviour
 
 	void OnDrawGizmos()
 	{
+		//Draw the Ignore Area
+		Gizmos.color = Color.magenta;
+		for(int i = 0; i < ignoreAreas.Count; ++i)
+		{
+			Gizmos.matrix = transform.localToWorldMatrix * Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(ignoreAreas[i].rotation), Vector3.one);
+			Gizmos.DrawWireCube(ignoreAreas[i].pos, ignoreAreas[i].size);
+		}
+
+		//Draw the Clutter Object
 		Gizmos.matrix = transform.localToWorldMatrix;
 		switch(clutterVolumeShape)
 		{
@@ -47,13 +56,6 @@ public class ClutterVolume : MonoBehaviour
 			Debug.Log ("Cannot draw Cylinder at this time");
 			break;
 		}
-
-		Gizmos.color = Color.magenta;
-		for(int i = 0; i < ignoreAreas.Count; ++i)
-		{
-			Gizmos.DrawWireCube(ignoreAreas[i].pos, ignoreAreas[i].size);
-		}
-
 
 		//Everything below this should be used for drawing the gizmos of the voxels
 		if (!drawVoxelSolid && !drawVoxelWire)
